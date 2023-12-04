@@ -10,9 +10,22 @@ void	exit_minishell(void)
 
 void	handlerctrld(int num)
 {
-	if (num == EOF)
-		{
+	// struct sigaction sa;
+
+	// if (num == EOF)
+	// 	{
 			printf("ctrl -D reçu");
-			make_prompt();
-		}
+			exit_minishell();
+			// sigaction(num, handlerctrld);
+		// }
+	// sa.sa_handler = handlerctrld;
+	// sigaction(SIGINT, &sa, NULL);
+}
+
+void handlerctrlc(int num)
+{
+	printf("ctrl -C reçu");
+	// struct sigaction sa;
+	// sa.sa_handler = handlerctrlc;
+	// sigaction(SIGINT, &sa, NULL);
 }

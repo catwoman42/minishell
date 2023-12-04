@@ -1,7 +1,7 @@
 
 #include "../includes/minishell.h"
 
-char	*search_path(char **args)
+char	*search_path(char **args, t_data *datas)
 {
 	int		i;
 	char *path;
@@ -9,7 +9,7 @@ char	*search_path(char **args)
 	char *path_found;
 
 	i = 0;
-	path = get_env_var("PATH", g_data.orig_env);
+	path = get_env_var("PATH", datas->orig_env);
 	if (!path)
 		return (NULL);
 	paths_in_array = ft_split(path, ':');
@@ -24,14 +24,17 @@ char	*search_path(char **args)
 	return (NULL);
 }
 
-int	my_execve(char **args)
+int	my_execve(char **args, t_data *datas)
 {
 	pid_t	pid;
 	char	*prog_path;
 
-	prog_path = search_path(args);
-	if (prog_path)
-		printf("Found %s at %s\n\n", args[0], prog_path);
+	if (ft_strchr(args[0], '/'))
+		prog_path = ft_strdup(args[0]);
+	else
+		prog_path = search_path(args, datas);
+	// if (prog_path)
+	// 	printf("Found %s at %s\n\n", args[0], prog_path);
 	if (!prog_path)
 		return(1);
 	pid = fork();
@@ -47,5 +50,6 @@ int	my_execve(char **args)
 		int status;
 		wait(&status);
 	}
+	free(prog_path);
 	return (0);
 }

@@ -1,6 +1,6 @@
 #include "../includes/minishell.h"
 
-void	my_unset(char **args)
+void	my_unset(char **args, t_data *datas)
 {
 	int		line;
 	int		name_len;
@@ -13,17 +13,17 @@ void	my_unset(char **args)
 	if (equal == NULL)
 		name_len = equal - args[1];
 	var_name = ft_strldup(args[1], name_len);
-	line = get_env_var_line(var_name, g_data.copy_env);
+	line = get_env_var_line(var_name, datas->copy_env);
 	if (line >= 0)
 	{
-		free(g_data.copy_env[line]);
-		while (g_data.copy_env[line] != NULL)
+		free(datas->copy_env[line]);
+		while (datas->copy_env[line] != NULL)
 		{
-			g_data.copy_env[line] = g_data.copy_env[line + 1];
+			datas->copy_env[line] = datas->copy_env[line + 1];
 			++line;
 		}
 	}
-	temp_env = copy_env_var(g_data.copy_env);
-	free_2d_char(g_data.copy_env);
-	g_data.copy_env = temp_env;
+	temp_env = copy_env_var(datas->copy_env);
+	free_2d_char(datas->copy_env);
+	datas->copy_env = temp_env;
 }

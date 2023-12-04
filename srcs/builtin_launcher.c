@@ -14,7 +14,7 @@ void	prt_env(char **args)
 	}
 }
 
-int	look_for_builtin(char **args)
+int	look_for_builtin(char **args, t_data *datas)
 {
 	if (ft_strcmp(args[0], "echo") == 0)
 		builtin_echo(args);
@@ -25,11 +25,11 @@ int	look_for_builtin(char **args)
 	else if (ft_strcmp(args[0], "exit") == 0)
 		exit_minishell();
 	else if (ft_strcmp(args[0], "env") == 0)
-		prt_env(g_data.copy_env);
+		prt_env(datas->copy_env);
 	else if (ft_strcmp(args[0], "export") == 0)
-		my_export(args);
+		my_export(args, datas);
 	else if (ft_strcmp(args[0], "unset") == 0)
-		my_unset(args);
+		my_unset(args, datas);
 	else
 		return (1);
 	return (0);

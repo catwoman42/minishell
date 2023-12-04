@@ -1,18 +1,18 @@
 #include "../includes/minishell.h"
 
-void	make_prompt(void)
+void	make_prompt(t_data *datas)
 {
-	if (g_data.prompt)
-		free(g_data.prompt);
-	g_data.prompt = ft_strdup("Minishell > "); // string en dur à changer
+	if (datas->prompt)
+		free(datas->prompt);
+	datas->prompt = ft_strdup("Minishell > "); // string en dur à changer
 }
 
-void	init_vars(char **env)
+void	init_vars(char **env, t_data *datas)
 {
-	g_data.err = 0;
-	g_data.exit = 0;
-	g_data.orig_env = env;
-	g_data.copy_env = copy_env_var(env);
-	g_data.prompt = NULL;
-	make_prompt();
+	datas->err = 0;
+	datas->exit = 0;
+	datas->orig_env = env;
+	datas->copy_env = copy_env_var(env);
+	datas->prompt = NULL;
+	make_prompt(datas);
 }
