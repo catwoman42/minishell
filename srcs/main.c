@@ -1,18 +1,17 @@
 #include "../includes/minishell.h"
 
-// t_data g_data;
-
 void	prt_args(t_data *datas)
 {
 	int	i = -1;
-	printf("*** New array ***");
 	while (datas->args_arr[++i])
 	{
-		printf("\nLine %d\n >> ", i);
+		printf("\nargs_arr[%d]\n >> ", i);
 		int j = -1;
 		while (datas->args_arr[i][++j])
-			printf("%s ", datas->args_arr[i][j]);
+			printf("[%d]{%s} ", j, datas->args_arr[i][j]);
+		printf("[%d]NULL ", j);
 	}
+	printf("\nargs_arr[%d] >> NULL", i);
 	printf("\n");
 }
 
@@ -27,13 +26,22 @@ int	cmd_launcher(t_data *datas)
 		if (datas->args_arr[i][0][0] != '|')
 		{
 			printf("\n>>> Command output:\n");
-			err = my_execve(datas->args_arr[i], datas);	// system program
+			err = look_for_builtin(datas->args_arr[i], datas);	// builtins
 			if (err != 0)
-				err = look_for_builtin(datas->args_arr[i], datas);	// builtins
+				err = my_execve(datas->args_arr[i], datas);		// system program
+			if (err)
+				printf("%s: command not found\n", datas->args_arr[i][0]);
 		}
 	}
 	return (err);
 }
+
+//char ***args_arr[0] = {"echo", "La maison", NULL};
+//char ***args_arr[1] = {"|", NULL};
+//char ***args_arr[2] = {"echo", "Coucou", NULL};
+//char ***args_arr[3] = {"|", NULL};
+//char ***args_arr[4] = {"grep", "o", ">", "file" NULL};
+//char ***args_arr[4] = NULL
 
 void	main_command_loop(t_data *datas)
 {
@@ -43,63 +51,46 @@ void	main_command_loop(t_data *datas)
 	while (!datas->exit)
 	{
 		err = 0;
-		datas->cmd_line = readline(datas->prompt);
+		make_prompt(datas);
+		datas->cmd_line = readline(datas->prompt);	// lecture ligne de commande
 
-		if (datas->cmd_line == NULL)
+		if (datas->cmd_line == NULL)				// gestion CTRL D > STOP LOOP
 			break ;
-		if (datas->cmd_line[0])
+		if (datas->cmd_line[0])						// si la ligne n'est pas vide
 		{
-			add_history(datas->cmd_line);
+			add_history(datas->cmd_line);			// ajoute la ligne a l'historique
 
-			parse(datas->cmd_line, datas);
-			prt_args(datas);
-
-			// err = my_execve(args);	// system program
-			// if (err != 0)
-			// 	err = look_for_builtin(args);	// builtins
-			err = cmd_launcher(datas);
-			clear_data_args_arr(datas);
+			err = parse(datas->cmd_line, datas);	// parsing (err si les quotes ne ferment pas)
+			if (!err)
+			{
+				prt_args(datas);
+				err = cmd_launcher(datas);			// lance les commandes
+				clear_data_args_arr(datas);			// free ***data.args_arr
+			}
 		}
 		free(datas->cmd_line);
 	}
 }
 
-//char *args[] = {"echo", "La maison", NULL};
-
 int	main(int argc, char **argv, char **env)
 {
-	struct sigaction	sa;
-	t_data datas;
+	t_data	datas;
 
 	(void)argc;
 	(void)argv;
 
-	// sa.sa_sigaction = &handlerctrld;
-	// sa.sa_handler = handlerctrlclear
-
-  sigaction(SIGQUIT, &sa, NULL);
-
-	sa.sa_handler = handlerctrlc;
-  sigaction(SIGINT, &sa, NULL);
-
-	// int		found;
-	// char	**args;
+	signal(SIGQUIT, SIG_IGN);
+	signal(SIGINT, handlerctrlc);
 
 	init_vars(env, &datas);
-	// copy_env_var();
 
 	main_command_loop(&datas);
-	 printf("start my_export");
-	exit_minishell();
+	// parse("echo asdfa dF\"ads f\"sadf sdf's df's\"0\"\"1\" \"2\"dfg'gdsfgdf'g\" ' dfg'   dfgdfg\"\"yui\"'ohb'ghjk'o'     d\"\"\"gdf \"'g'h|", &datas);
+	// prt_args(&datas);
+	// clear_data_args_arr(&datas);
 
-	if (signal(EOF, handlerctrld) == SIG_ERR)
-	{
-		printf("error lors config");
-		return (1);
-	}
-	// exit 42 ? (y)19
-	while (1)
-		usleep(1000);
+	exit_minishell(&datas);
+
 	return (0);
 }
 

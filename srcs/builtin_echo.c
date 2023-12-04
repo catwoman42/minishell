@@ -4,5 +4,14 @@
 
 void	builtin_echo(char **args)
 {
-	printf("%s\n", args[1]);
+	int i;
+	i = 1;
+	while (args[i] != NULL)
+	{
+		printf("%s", args[i]);
+		if (args[i + 1] != NULL)
+			printf(" ");
+		i++;
+	}
+	printf("\n");
 }

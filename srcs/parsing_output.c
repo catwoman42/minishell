@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_output.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:19:16 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/01 17:24:34 by rloussig         ###   ########.fr       */
+/*   Updated: 2023/12/04 10:59:40 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

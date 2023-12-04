@@ -4,6 +4,11 @@
 
 void builtin_cd(char **args)
 {
-    if (chdir(args[1]) != 0)
-        printf("chdir() failed");
+	if (args[1] == NULL)
+	{
+		if (chdir(getenv("HOME")) != 0)
+			printf("error1\n");
+	}
+	else if (args[2] != NULL)
+		printf("trop d'args");
 }

@@ -6,7 +6,7 @@
 /*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:19:19 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/04 10:26:31 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/04 12:48:38 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,28 +49,38 @@ char	**join_double_redirs(char **args)
 	return (args);
 }
 
-char	**parse(char *cmd_line, t_data *datas)
+int	parse(char *cmd_line, t_data *datas)
 {
 	char	**args;
 	int		i;
 
 	if (check_quotes_closing(cmd_line) < 0)
-		return (NULL);
+		return (-1);
 	args = malloc(sizeof(char *) * 1);
 	args[0] = NULL;
 	args = analyse_quotes(args, cmd_line);
+	// printf("Quotes splitted\n");
 	// prt_arg(args);
 	args = replace_vars(args, datas);
+	// printf("$s replaced\n");
 	// prt_arg(args);
 	args = split_cmds(args);
+	// printf("Cmds splitted\n");
 	// prt_arg(args);
 	args = trim_all_str(args);
+	// printf("Trimmed\n");
 	// prt_arg(args);
 	args = split_spaces(args);
+	// printf("Space splitted\n");
 	// prt_arg(args);
 	args = join_double_redirs(args);
+	// printf("Double << >>\n");
 	// prt_arg(args);
-	args = check_quotes_to_join(args);
+	args = check_elements_to_join(args);
+	// printf("Quotes joined\n");
+	// prt_arg(args);
+	args = rm_empty_elements(args);
+	// printf("Empty removed\n");
 	// prt_arg(args);
 	create_output(args, datas);
 	remove_quotes(datas);
@@ -78,7 +88,7 @@ char	**parse(char *cmd_line, t_data *datas)
 	while (args[++i])
 		free(args[i]);
 	free(args);
-	return (args);
+	return (0);
 }
 
 void	clear_data_args_arr(t_data *datas)

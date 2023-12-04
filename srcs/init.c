@@ -2,9 +2,21 @@
 
 void	make_prompt(t_data *datas)
 {
+	char	*str;
+	char	*str2;
+	char	buf[1024];
+	int		i;
+
 	if (datas->prompt)
 		free(datas->prompt);
-	datas->prompt = ft_strdup("Minishell > "); // string en dur à changer
+	getcwd(buf, 1024);
+	i = ft_strlen(buf);
+	while (buf[i] != '/')
+		i--;
+	str = ft_strjoin(RED"Minishell:"YELLOW, buf + i);
+	str2 = ft_strjoin(str, RED"$ "NC);
+	free(str);
+	datas->prompt = str2;
 }
 
 void	init_vars(char **env, t_data *datas)

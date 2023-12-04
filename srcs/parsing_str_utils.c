@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_str_utils.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:19:09 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/01 17:19:09 by rloussig         ###   ########.fr       */
+/*   Updated: 2023/12/04 11:29:45 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,30 +37,6 @@ char	*ft_trim(char *str)
 	return (ret);
 }
 
-char	**trim_all_str(char **args)
-{
-	int		i;
-	char	*tmp;
-
-	i = -1;
-	while (args[++i])
-	{
-		if (is_only_spaces(args[i]) || is_only_quotes(args[i]))
-		{
-			args = rm_arr_line(args, i);
-			i--;
-		}
-		else
-		{
-			ft_reduce_multiple_spaces(args[i]);
-			tmp = ft_trim(args[i]);
-			free(args[i]);
-			args[i] = tmp;
-		}
-	}
-	return (args);
-}
-
 char	*ft_reduce_multiple_spaces(char *str)
 {
 	int	i;
@@ -81,11 +57,24 @@ char	*ft_reduce_multiple_spaces(char *str)
 		{
 			if (flag == 0)
 				str[i++] = ' ';
-			else
-				j++;
 			flag = 1;
 		}
 	}
 	str[i] = '\0';
 	return (str);
+}
+
+char	**trim_all_str(char **args)
+{
+	int		i;
+
+	i = -1;
+	while (args[++i])
+	{
+		if (is_only_spaces(args[i]))
+			args[i][0] = '\0';
+		else if (args[i][0] != '\'' && args[i][0] != '"')
+			ft_reduce_multiple_spaces(args[i]);
+	}
+	return (args);
 }

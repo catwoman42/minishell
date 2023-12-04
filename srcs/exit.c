@@ -1,31 +1,20 @@
 #include "../includes/minishell.h"
 
-void	exit_minishell(void)
+void	exit_minishell(t_data *datas)
 {
 	printf("\nExit\n");
 	// FREE ALL MALLOCS
-
+	if (datas->prompt)
+		free(datas->prompt);
+	free_2d_char(datas->copy_env);
 	exit(0);
-}
-
-void	handlerctrld(int num)
-{
-	// struct sigaction sa;
-
-	// if (num == EOF)
-	// 	{
-			printf("ctrl -D reçu");
-			exit_minishell();
-			// sigaction(num, handlerctrld);
-		// }
-	// sa.sa_handler = handlerctrld;
-	// sigaction(SIGINT, &sa, NULL);
 }
 
 void handlerctrlc(int num)
 {
-	printf("ctrl -C reçu");
-	// struct sigaction sa;
-	// sa.sa_handler = handlerctrlc;
-	// sigaction(SIGINT, &sa, NULL);
+	(void)num;
+	write(1, "\n", 1);
+	rl_on_new_line();
+	rl_replace_line("", 0);
+	rl_redisplay();
 }

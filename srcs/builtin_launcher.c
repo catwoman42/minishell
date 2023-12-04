@@ -23,7 +23,7 @@ int	look_for_builtin(char **args, t_data *datas)
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		builtin_pwd();
 	else if (ft_strcmp(args[0], "exit") == 0)
-		exit_minishell();
+		exit_minishell(datas);
 	else if (ft_strcmp(args[0], "env") == 0)
 		prt_env(datas->copy_env);
 	else if (ft_strcmp(args[0], "export") == 0)

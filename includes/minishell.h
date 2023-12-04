@@ -1,8 +1,6 @@
 #ifndef MINISHEEL_H
 # define MINISHELL_H
 
-
-#define BUF_CMD_LINE 1024
 # include <stdio.h>
 # include <stddef.h>
 # include <stdlib.h>
@@ -13,9 +11,14 @@
 # include <sys/wait.h>
 # include <sys/types.h>
 # include <limits.h>
-#	include	<signal.h>
-#	include	<stdbool.h>
+# include <signal.h>
+# include <stdbool.h>
 # include <string.h>
+
+# define NC			"\e[0m"
+# define YELLOW		"\e[1;33m"
+# define BLUE		"\e[1;34m"
+# define RED		"\e[1;91m"
 
 typedef struct s_data
 {
@@ -27,17 +30,14 @@ typedef struct s_data
 	char	*prompt;
 	char	**copy_env;
 	char	***args_arr;
-}						t_data;
-
-// extern t_data	g_data;
+}				t_data;
 
 // my_execve.c
-int	my_execve(char **args, t_data *datas);
+int		my_execve(char **args, t_data *datas);
 
 // my_export
-void my_export(char **args, t_data *datas);
-int is_space(char c);
-int	name_is_valid(char **args);
+void 	my_export(char **args, t_data *datas);
+int		name_is_valid(char **args);
 
 // my_unset
 void	my_unset(char **args, t_data *datas);
@@ -47,7 +47,7 @@ void	init_vars(char **env, t_data *datas);
 void	make_prompt(t_data *datas);
 
 //builtin_launcher.c
-int	look_for_builtin(char **args, t_data *datas);
+int		look_for_builtin(char **args, t_data *datas);
 // builtin_echo.c
 void	builtin_echo(char **args);
 // builtin_cd.c
@@ -57,9 +57,9 @@ int		builtin_pwd(void);
 
 // env_utils.c
 char 	*get_env_var(char *var_name, char **env);
-int get_env_var_line(char *var_name, char **env);
+int 	get_env_var_line(char *var_name, char **env);
 char	**copy_env_var(char **env);
-int	nb_lines_arr(char **array);
+int		nb_lines_arr(char **array);
 
 // libft_utils_1.c
 int		ft_strcmp(const char *s1, const char *s2);
@@ -79,7 +79,7 @@ void	*ft_memcpy(void *dest, const void *src, size_t n);
 char	*ft_strjoin_with_slash(char const *s1, char const *s2);
 
 // libft_utils_4.c
-char *ft_strcpy(char *dest, char *src);
+char 	*ft_strcpy(char *dest, char *src);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strldup(const char *s, size_t len);
 
@@ -87,42 +87,39 @@ char	*ft_strldup(const char *s, size_t len);
 void	free_2d_char(char **arr);
 
 // exit
-void	exit_minishell(void);
-void	handlerctrld(int num);
-void handlerctrlc(int num);
+void	exit_minishell(t_data *datas);
+void 	handlerctrlc(int num);
 
-// parse.c
-char **tokenise(char *cmd_line, int token_id, int carac_nb, bool is_quote);
-void free_memory(char **args);
-
+// **** PARSING ****
 // parsing_main.c
-char	**parse(char *cmd_line, t_data *datas);
+int		parse(char *cmd_line, t_data *datas);
 void	clear_data_args_arr(t_data *datas);
-
+// parsing_quotes.c
 char	**analyse_quotes(char **args, char *str);
 int		check_quotes_closing(char *str);
 void	remove_quotes(t_data *datas);
-
+// parsing_env_vars.c
 char	**replace_vars(char **args, t_data *datas);
-
+// parsing_is_char.c
 int		is_alpha_num(char c);
 int		is_split_char(char c);
 int		is_spaces(char c);
 int		is_only_spaces(char *str);
 int		is_only_quotes(char *str);
-
+// parsing_arrays_utils.c
 char	**add_str_part_to_arr(char **args, char *str, int start, int end);
 char	**add_str_arr_pos(char **arr, int pos, char *str);
 char	**rm_arr_line(char **args, int pos);
-
+// parsing_str_utils.c
 char	**trim_all_str(char **args);
 char	*ft_reduce_multiple_spaces(char *str);
-
-char	**check_quotes_to_join(char **args);
-
+// parsing_join_quotes.c
+char	**check_elements_to_join(char **args);
+char	**rm_empty_elements(char **args);
+// parsing_splits.c
 char	**split_cmds(char **args);
 char	**split_spaces(char **args);
-
+// parsing_output.c
 void	create_output(char **args, t_data *datas);
 
 #endif

@@ -70,7 +70,6 @@ char	**copy_env_var(char **env)
 	copy[len_env] = NULL;
 	copy[len_env + 1] = NULL;
 	return (copy);
-	// return (g_data.copy_env);
 }
 
 int	nb_lines_arr(char **array)

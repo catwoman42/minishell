@@ -17,10 +17,14 @@ char	*search_path(char **args, t_data *datas)
 	{
 		path_found = ft_strjoin_with_slash(paths_in_array[i], args[0]);
 		if (access(path_found, F_OK) == 0)
+		{
+			free_2d_char(paths_in_array);
 			return (path_found);
+		}
 		free(path_found);
 		i++;
 	}
+	free_2d_char(paths_in_array);
 	return (NULL);
 }
 

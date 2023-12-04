@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_join_quotes.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:19:14 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/01 17:21:54 by rloussig         ###   ########.fr       */
+/*   Updated: 2023/12/04 12:15:11 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,19 @@ char	*merge_args(char **args, int start, int end, char *tmp)
 {
 	int		i;
 	int		j;
+	int		has_quotes;
 
 	j = -1;
 	while (start <= end)
 	{
-		i = 0;
-		while (args[start][++i + 1])
+		i = -1;
+		if (args[start][0] == '\'' || args[start][0] == '"')
+			i = 0;
+		if (args[start][0] == '\'' || args[start][0] == '"')
+			has_quotes = 1;
+		else
+			has_quotes = 0;
+		while (args[start][++i + has_quotes])
 			tmp[++j] = args[start][i];
 		start++;
 	}
@@ -52,30 +59,41 @@ char	**join_quotes(char **args, int start, int end)
 	return (args);
 }
 
-char	**check_quotes_to_join(char **args)
+char	**check_elements_to_join(char **args)
 {
-	int		i;
-	int		j;
+	int	i;
+	int	j;
+
+	i = -1;
+	while (args[++i + 1])
+	{
+		if ((args[i][0] != '\0') && (args[i][0] == '"' || args[i][0] == '\''
+			|| args[i + 1][0] == '"' || args[i + 1][0] == '\''))
+		{
+			j = i;
+			while (args[j + 1][0] == '"' || args[j + 1][0] == '\'')
+				j++;
+			if (args[j + 1])
+			{
+				if (args[j + 1][0] != '\0')
+					j++;
+			}
+			if (i != j)
+				join_quotes(args, i--, j);
+		}
+	}
+	return (args);
+}
+
+char	**rm_empty_elements(char **args)
+{
+	int	i;
 
 	i = -1;
 	while (args[++i])
 	{
-		if (args[i][0] == '\'' || args[i][0] == '"')
-		{
-			j = i;
-			while (args[j + 1])
-			{
-				if (args[j + 1][0] == '\'' || args[j + 1][0] == '"')
-					j++;
-				else
-					break ;
-			}
-			if (j > i)
-			{
-				join_quotes(args, i, j);
-				i = j;
-			}
-		}
+		if (args[i][0] == '\0')
+			rm_arr_line(args, i);
 	}
 	return (args);
 }
