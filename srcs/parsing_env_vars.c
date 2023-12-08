@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_env_vars.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:20:36 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/01 17:36:02 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/08 12:18:22 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,22 @@ char	*replace_var_in_str(char *str, int pos, char *name, char *val)
 	return (ret);
 }
 
+char	*retrieve_var_from_env(char *var_name, t_data *datas)
+{
+	char	*val;
+
+	if (var_name[0] == '?')
+	{
+		if (var_name[1] == '\0')
+		{
+			val = ft_itoa(datas->exit_status);
+			return (val);
+		}
+	}
+	val = get_env_var(var_name, datas->copy_env);
+	return (val);
+}
+
 char	*check_vars_in_str(char *str, t_data *datas)
 {
 	char	*start;
@@ -46,13 +62,17 @@ char	*check_vars_in_str(char *str, t_data *datas)
 
 	start = ft_strchr(str, '$') + 1;
 	end = start - str;
-	while (str[++end])
+	if (is_alpha(str[end]) || str[end] == '_' || str[end++] == '?')
 	{
-		if (is_alpha_num(str[end]) == 0)
-			break ;
+		while (str[end])
+		{
+			if (is_alpha_num(str[end]) == 0 && str[end] != '_')
+				break ;
+			end++;
+		}
 	}
 	var_name = ft_strldup(start, end - (int)(start - str));
-	var_val = get_env_var(var_name, datas->copy_env);
+	var_val = retrieve_var_from_env(var_name, datas);
 	if (var_val)
 		ret = replace_var_in_str(str, start - str - 1, var_name, var_val);
 	else

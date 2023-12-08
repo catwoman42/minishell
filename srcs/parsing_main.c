@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_main.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:19:19 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/04 12:48:38 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/06 12:20:50 by rloussig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,11 @@ int	parse(char *cmd_line, t_data *datas)
 	args = malloc(sizeof(char *) * 1);
 	args[0] = NULL;
 	args = analyse_quotes(args, cmd_line);
-	// printf("Quotes splitted\n");
-	// prt_arg(args);
+	printf("Quotes splitted\n");
+	prt_arg(args);
 	args = replace_vars(args, datas);
-	// printf("$s replaced\n");
-	// prt_arg(args);
+	printf("$s replaced\n");
+	prt_arg(args);
 	args = split_cmds(args);
 	// printf("Cmds splitted\n");
 	// prt_arg(args);

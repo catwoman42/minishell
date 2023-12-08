@@ -17,6 +17,7 @@ SRCS_FILES = 	main.c						\
 				libft_utils_2.c				\
 				libft_utils_3.c				\
 				libft_utils_4.c				\
+				libft_utils_5.c				\
 				env_utils.c					\
 				free_utils.c				\
 				exit.c						\

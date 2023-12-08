@@ -6,7 +6,7 @@
 /*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:21:27 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/01 17:21:38 by rloussig         ###   ########.fr       */
+/*   Updated: 2023/12/06 12:25:53 by rloussig         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,14 @@
 int	is_alpha_num(char c)
 {
 	if ((c >= '0' && c <= '9') || (c >= 'a' && c <= 'z')
+		|| (c >= 'A' && c <= 'Z'))
+		return (1);
+	return (0);
+}
+
+int	is_alpha(char c)
+{
+	if ((c >= 'a' && c <= 'z')
 		|| (c >= 'A' && c <= 'Z'))
 		return (1);
 	return (0);

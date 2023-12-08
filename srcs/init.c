@@ -23,6 +23,8 @@ void	init_vars(char **env, t_data *datas)
 {
 	datas->err = 0;
 	datas->exit = 0;
+	datas->cmd_ret = 0;
+	datas->exit_status = 0;
 	datas->orig_env = env;
 	datas->copy_env = copy_env_var(env);
 	datas->prompt = NULL;
