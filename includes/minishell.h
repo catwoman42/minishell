@@ -14,6 +14,7 @@
 # include <signal.h>
 # include <stdbool.h>
 # include <string.h>
+# include <fcntl.h>
 
 # define NC			"\e[0m"
 # define YELLOW		"\e[1;33m"
@@ -31,6 +32,9 @@ typedef struct s_data
 	char	**copy_env;
 	char	***args_arr;
 }				t_data;
+
+// redirect.c
+int redirection (char **args, char *type_red, char **file_name);
 
 // my_execve.c
 int		my_execve(char **args, t_data *datas);
@@ -51,7 +55,7 @@ int		look_for_builtin(char **args, t_data *datas);
 // builtin_echo.c
 void	builtin_echo(char **args);
 // builtin_cd.c
-void	builtin_cd(char **args);
+void	builtin_cd(char **args, t_data *datas);
 // builtin_pwd.c
 int		builtin_pwd(void);
 

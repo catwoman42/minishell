@@ -43,7 +43,7 @@ static char	**ft_free_all(char **tb, int tb_size)
 		free(tb[i]);
 		i++;
 	}
-	free(tb);
+	// free(tb);
 	return (tb);
 }
 

@@ -19,7 +19,7 @@ int	look_for_builtin(char **args, t_data *datas)
 	if (ft_strcmp(args[0], "echo") == 0)
 		builtin_echo(args);
 	else if (ft_strcmp(args[0], "cd") == 0)
-	 	builtin_cd(args);
+	 	builtin_cd(args, datas);
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		builtin_pwd();
 	else if (ft_strcmp(args[0], "exit") == 0)
