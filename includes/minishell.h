@@ -33,10 +33,14 @@ typedef struct s_data
 	char	***args_arr;
 	int		cmd_ret;
 	int		exit_status;
+	char	**redirection_file;
+	char	*type_redir;
+	int		saved_fd_in;
+	int		saved_fd_out;
 }				t_data;
 
 // redirect.c
-int redirection (char **args, char *type_red, char **file_name);
+int redirection (char *type_red, char *file_name);
 
 // my_execve.c
 int		my_execve(char **args, t_data *datas);
@@ -132,5 +136,7 @@ char	**split_spaces(char **args);
 void	create_output(char **args, t_data *datas);
 
 int		is_alpha(char c);
+
+int	is_redirect(t_data *datas);
 
 #endif

@@ -1,53 +1,39 @@
 #include "../includes/minishell.h"
 
-int redirection (char **args, char *type_red, char **file_name)
+int redirection (char *type_red, char *file_name)
 {
-	int fileDescriptor;
-	int     option = 0;
-    char    **envp; // Empty environment variables array
+	int file_descriptor;
 
-	pid_t pid;
-
+	//printf("type_red = %s et file_name = %s \n", type_red, file_name);
 	if (ft_strcmp(type_red, ">") == 0)
-		option = 0;
-	if (ft_strcmp(type_red, "<") == 0)
-		option = 1;
-	if (ft_strcmp(type_red, ">>") == 0)
-		option = 2;
-	if ((pid = fork()) == -1)
 	{
-		printf("Child process could not be created\n");
-		return (-1);
+		file_descriptor = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+		if (file_descriptor == -1)
+		{
+			printf("error creating file");
+			return (1);
+		}
+		dup2(file_descriptor, STDOUT_FILENO);
+		close(file_descriptor);
 	}
-	if (pid == 0)
+	else if (ft_strcmp(type_red, "<") == 0)
 	{
-		if (option == 0)
+		file_descriptor = open(file_name, O_RDONLY, 0600);
+		if (file_descriptor == -1)
 		{
-			fileDescriptor = open(file_name[0], O_CREAT | O_TRUNC | O_WRONLY, 0600);
-			dup2(fileDescriptor, STDOUT_FILENO);
-			close(fileDescriptor);
+			printf("error opening file");
+			return (1);
 		}
-		else if (option == 1)
-		{
-			fileDescriptor = open(file_name[0], O_RDONLY, 0600);
-			dup2(fileDescriptor, STDIN_FILENO);
-			close(fileDescriptor);
-		}
-		else if (option == 2)
-		{
-			fileDescriptor = open(file_name[0], O_CREAT | O_WRONLY | O_APPEND, 0600);
-			dup2(fileDescriptor, STDOUT_FILENO);
-			close(fileDescriptor);
-		}
-    envp = (char *[]) {NULL};
-		if (execve(args[0], args, envp) == -1)
-		{
-			printf("err");
-			kill(getpid(), SIGTERM);
-		}
+		dup2(file_descriptor, STDIN_FILENO);
+		// printf("DUP2: %d\n");
+		close(file_descriptor);
 	}
-	waitpid(pid, NULL, 0);
-	return 0;
+	else if (ft_strcmp(type_red, ">>") == 0)
+	{
+		file_descriptor = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0600);
+		dup2(file_descriptor, STDOUT_FILENO);
+		close(file_descriptor);
+	}	return 0;
 }
 
 // lit depuis l'input ce qu'il y a entre les delimiteurs

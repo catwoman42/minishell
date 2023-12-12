@@ -52,7 +52,8 @@ int	my_execve(char **args, t_data *datas)
 	else
 	{
 		int status;
-		wait(&status);
+		waitpid(0, &status, 0);
+		//printf("EXECVE\n");
 	}
 	free(prog_path);
 	return (0);

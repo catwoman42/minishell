@@ -1,0 +1,3 @@
+bonjour > hello.txt
+[1;91mMinishell:[1;33m/minishell[1;91m$ [0m
+Exit

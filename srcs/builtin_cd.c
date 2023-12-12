@@ -11,30 +11,25 @@
 
 void builtin_cd(char **args, t_data *datas)
 {
+	int err;
+
+	err = 0;
 	if (args[1] == NULL)
 	{
 		if (get_env_var("HOME", datas->copy_env) != 0)
-		{
-			if (chdir(get_env_var("HOME", datas->copy_env)) != 0)
-				perror("Erreur lors changement répertoire home");
-		}
+			err = chdir(get_env_var("HOME", datas->copy_env));
 		else
-		{
-			fprintf(stderr, "no HOME\n");
-		}
+			return ;
 	}
 	else if (args[2] != NULL)
 		fprintf(stderr, "cd: too many arguments\n");
 	else
+		err = chdir(args[1]);
+	if (err)
 	{
-		if (access(args[1], F_OK) != -1)
-		{
-			if (chdir(args[1]) != 0)
-				printf("error");
-		}
-		else
-		{
-			printf("cd: %s: No such file or directory\n", args[1]);
-		}
+		printf("cd: %s: No such file or directory\n", args[1]);
+		datas->exit_status = 1;
 	}
+	else
+		datas->exit_status = 0;
 }

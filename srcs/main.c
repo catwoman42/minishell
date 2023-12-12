@@ -15,6 +15,33 @@ void	prt_args(t_data *datas)
 	printf("\n");
 }
 
+
+int	check_redir(char **cmd_line, t_data *datas)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_line[i] != NULL)
+	{
+		if (ft_strcmp(cmd_line[i], "<") == 0 || ft_strcmp(cmd_line[i], ">>") == 0
+			|| ft_strcmp(cmd_line[i], ">") == 0 || ft_strcmp(cmd_line[i], "<<") == 0)
+			{
+				if (!(cmd_line[i + 1]))
+					printf("syntax error near unexpected token `newline'\n");
+				else
+				{
+					redirection(cmd_line[i], cmd_line[i + 1]);
+					free(cmd_line[i + 1]);
+				}
+
+				free(cmd_line[i]);
+				cmd_line[i] = NULL;
+			}
+			i++;
+	}
+	return (1);
+}
+
 int	cmd_launcher(t_data *datas)
 {
 	int	i;
@@ -26,12 +53,17 @@ int	cmd_launcher(t_data *datas)
 		if (datas->args_arr[i][0][0] != '|')
 		{
 			printf("\n>>> Command output:\n");
+			check_redir(datas->args_arr[i], datas);
 			err = look_for_builtin(datas->args_arr[i], datas);	// builtins
 			if (err != 0)
 				err = my_execve(datas->args_arr[i], datas);		// system program
 			if (err)
 				printf("%s: command not found\n", datas->args_arr[i][0]);
+			dup2(datas->saved_fd_out, STDOUT_FILENO);
+			dup2(datas->saved_fd_in, STDIN_FILENO);
 		}
+			// if (is_redirect(datas->args_arr[i][0][0]) == 0)
+		// 	redirection(datas->args_arr[i][0][0], );
 	}
 	return (err);
 }
@@ -40,7 +72,7 @@ int	cmd_launcher(t_data *datas)
 //char ***args_arr[1] = {"|", NULL};
 //char ***args_arr[2] = {"echo", "Coucou", NULL};
 //char ***args_arr[3] = {"|", NULL};
-//char ***args_arr[4] = {"grep", "o", ">", "file" NULL};
+//char ***args_arr[4] = {"echo", "hello", ">", "file", <, file2, NULL};
 //char ***args_arr[4] = NULL
 
 void	main_command_loop(t_data *datas)
@@ -101,7 +133,7 @@ void sigint_handler(int signo) {
     printf("\nVous avez appuyé sur Ctrl-C. Affichage du prompt : ");
     fflush(stdout);  // Assure que le message est affiché immédiatement
 
-    // Ajoutez ici votre logique de traitement ou votre prompt personnalisé
+    // logique de traitement ou votre prompt personnalisé
 
     // Réinitialise le gestionnaire de signal pour SIGINT
     signal(SIGINT, sigint_handler);
@@ -109,14 +141,8 @@ void sigint_handler(int signo) {
 
 int main()
 {
-    // Définit le gestionnaire de signal pour SIGINT
+    // ...
     signal(SIGINT, sigint_handler);
-
-    // Votre programme principal ici
-    while (1) {
-        // Effectuez vos opérations principales ici
-    }
-
     return 0;
 }
 

@@ -28,5 +28,9 @@ void	init_vars(char **env, t_data *datas)
 	datas->orig_env = env;
 	datas->copy_env = copy_env_var(env);
 	datas->prompt = NULL;
+	datas->redirection_file = NULL;
+	datas->type_redir = NULL;
+	datas->saved_fd_in = dup(STDIN_FILENO);
+	datas->saved_fd_out = dup(STDOUT_FILENO);
 	make_prompt(datas);
 }
