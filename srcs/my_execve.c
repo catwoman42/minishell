@@ -54,18 +54,12 @@ int	my_execve(char **args, t_data *datas)
 	}
 	else
 	{
-		//int status;
-		//wait(&status);
-
 		waitpid(pid, &datas->cmd_ret, 0);
 		datas->exit_status = WEXITSTATUS(datas->cmd_ret);
-		printf("Code sortie : %d\n", datas->exit_status); //debug
-
 		if (WIFEXITED(datas->cmd_ret))
-			printf("Le processus fils s'est terminé normalement avec le code de sortie : %d\n", WEXITSTATUS(datas->cmd_ret));
+			printf("%d\n", WEXITSTATUS(datas->cmd_ret));
 		else if (WIFSIGNALED(datas->cmd_ret))
-			printf("Le processus fils s'est terminé à cause du signal : %d\n", WTERMSIG(datas->cmd_ret));
-
+			printf("%d\n", WTERMSIG(datas->cmd_ret));
 	}
 	free(prog_path);
 	return (0);
