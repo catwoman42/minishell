@@ -1,17 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_cd.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 17:53:23 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/13 17:55:34 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-// Changer de dossier
-
-// Si aucun argument, répertoire home.
-// Si deux arguments ou plus, error.
-
-// Si l'argument est "--", elle change le répertoire vers le répertoire home.
-// Si l'argument commence par "-" (et n'a pas plus de deux caractères), elle change le répertoire vers l'ancien répertoire de travail.
-// Sinon, elle change le répertoire vers le chemin spécifié.
-
-void builtin_cd(char **args, t_data *datas)
+void	builtin_cd(char **args, t_data *datas)
 {
-	int err;
+	int	err;
 
 	err = 0;
 	if (args[1] == NULL)

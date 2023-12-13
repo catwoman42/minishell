@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_utils_2.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 18:26:46 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/13 18:27:01 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 static int	ft_nb_words(char const *s, char c)
@@ -43,7 +55,6 @@ static char	**ft_free_all(char **tb, int tb_size)
 		free(tb[i]);
 		i++;
 	}
-	// free(tb);
 	return (tb);
 }
 
