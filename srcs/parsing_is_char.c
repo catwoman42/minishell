@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_is_char.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:21:27 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/06 12:25:53 by rloussig         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:58:04 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

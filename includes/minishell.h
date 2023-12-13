@@ -1,4 +1,4 @@
-#ifndef MINISHEEL_H
+#ifndef MINISHELL_H
 # define MINISHELL_H
 
 # include <stdio.h>
@@ -15,6 +15,11 @@
 # include <stdbool.h>
 # include <string.h>
 # include <fcntl.h>
+# include <fcntl.h>
+# include <errno.h>
+
+// # ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
 
 # define NC			"\e[0m"
 # define YELLOW		"\e[1;33m"
@@ -37,10 +42,11 @@ typedef struct s_data
 	char	*type_redir;
 	int		saved_fd_in;
 	int		saved_fd_out;
+	int		here_doc_exists;
 }				t_data;
 
 // redirect.c
-int redirection (char *type_red, char *file_name);
+int redirection(char *type_red, char *file_name, t_data *datas);
 
 // my_execve.c
 int		my_execve(char **args, t_data *datas);
@@ -134,6 +140,9 @@ char	**split_cmds(char **args);
 char	**split_spaces(char **args);
 // parsing_output.c
 void	create_output(char **args, t_data *datas);
+
+// get next line
+char	*get_next_line(int fd);
 
 int		is_alpha(char c);
 

@@ -32,5 +32,6 @@ void	init_vars(char **env, t_data *datas)
 	datas->type_redir = NULL;
 	datas->saved_fd_in = dup(STDIN_FILENO);
 	datas->saved_fd_out = dup(STDOUT_FILENO);
+	datas->here_doc_exists = 0;
 	make_prompt(datas);
 }

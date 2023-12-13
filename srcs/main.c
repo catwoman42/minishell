@@ -25,21 +25,24 @@ int	check_redir(char **cmd_line, t_data *datas)
 	{
 		if (ft_strcmp(cmd_line[i], "<") == 0 || ft_strcmp(cmd_line[i], ">>") == 0
 			|| ft_strcmp(cmd_line[i], ">") == 0 || ft_strcmp(cmd_line[i], "<<") == 0)
+		{
+			if (!(cmd_line[i + 1]))
 			{
-				if (!(cmd_line[i + 1]))
-					printf("syntax error near unexpected token `newline'\n");
-				else
-				{
-					redirection(cmd_line[i], cmd_line[i + 1]);
-					free(cmd_line[i + 1]);
-				}
-
-				free(cmd_line[i]);
-				cmd_line[i] = NULL;
+				printf("syntax error near unexpected token `newline'\n");
+				return (1);
 			}
+			else
+			{
+				redirection(cmd_line[i], cmd_line[i + 1], datas);
+				free(cmd_line[i + 1]);
+			}
+			free(cmd_line[i]);
+			cmd_line[i] = NULL;
 			i++;
+		}
+		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int	cmd_launcher(t_data *datas)
@@ -53,7 +56,9 @@ int	cmd_launcher(t_data *datas)
 		if (datas->args_arr[i][0][0] != '|')
 		{
 			printf("\n>>> Command output:\n");
-			check_redir(datas->args_arr[i], datas);
+			err = check_redir(datas->args_arr[i], datas);
+			if (err == 1)
+				return (1);
 			err = look_for_builtin(datas->args_arr[i], datas);	// builtins
 			if (err != 0)
 				err = my_execve(datas->args_arr[i], datas);		// system program
@@ -61,6 +66,9 @@ int	cmd_launcher(t_data *datas)
 				printf("%s: command not found\n", datas->args_arr[i][0]);
 			dup2(datas->saved_fd_out, STDOUT_FILENO);
 			dup2(datas->saved_fd_in, STDIN_FILENO);
+			if (datas->here_doc_exists == 1)
+				unlink("temp_file.txt");
+			datas->here_doc_exists = 0;
 		}
 			// if (is_redirect(datas->args_arr[i][0][0]) == 0)
 		// 	redirection(datas->args_arr[i][0][0], );

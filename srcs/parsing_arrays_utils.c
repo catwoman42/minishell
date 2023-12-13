@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing_arrays_utils.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rloussig <rloussig@student.42.fr>          +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/01 17:19:04 by rloussig          #+#    #+#             */
-/*   Updated: 2023/12/01 17:20:29 by rloussig         ###   ########.fr       */
+/*   Updated: 2023/12/13 14:57:59 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
