@@ -45,6 +45,14 @@ typedef struct s_data
 	int		here_doc_exists;
 }				t_data;
 
+typedef struct	s_parse
+{
+	int start;
+	int end;
+	int i;
+	int j;
+}				t_parse;
+
 // redirect.c
 int redirection(char *type_red, char *file_name, t_data *datas);
 

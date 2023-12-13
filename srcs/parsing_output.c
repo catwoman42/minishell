@@ -18,78 +18,67 @@ void	init_out_arr(char **args, t_data *datas)
 		datas->args_arr[i] = NULL;
 }
 
-char	**fill_one_line(char **args, char **arr, int start, int end)
+char	**fill_one_line(char **args, char **arr, t_parse *p)
 {
-	int	i;
-	int	j;
-
-	arr = malloc(sizeof(char *) * (end - start + 2));
-	i = -1;
-	j = -1;
-	while (++i < end - start + 1)
+	arr = malloc(sizeof(char *) * (p->end - p->start + 2));
+	p->i = -1;
+	p->j = -1;
+	while (++p->i < p->end - p->start + 1)
 	{
-		if (args[start + i][0] == '<' || args[start + i][0] == '>')
-			i++;
+		if (args[p->start + p->i][0] == '<' || args[p->start + p->i][0] == '>')
+			p->i++;
 		else
-			arr[++j] = ft_strdup(args[start + i]);
+			arr[++p->j] = ft_strdup(args[p->start + p->i]);
 	}
-	i = -1;
-	while (++i < end - start + 1)
+	p->i = -1;
+	while (++p->i < p->end - p->start + 1)
 	{
-		if (args[start + i][0] == '<' || args[start + i][0] == '>')
+		if (args[p->start + p->i][0] == '<' || args[p->start + p->i][0] == '>')
 		{
-			arr[++j] = ft_strdup(args[start + i]);
-			if (args[start + i + 1])
+			arr[++p->j] = ft_strdup(args[p->start + p->i]);
+			if (args[p->start + p->i + 1])
 			{
-				arr[++j] = ft_strdup(args[start + i + 1]);
-				i++;
+				arr[++p->j] = ft_strdup(args[p->start + p->i + 1]);
+				p->i++;
 			}
 		}
 	}
-	arr[i] = NULL;
+	arr[p->i] = NULL;
 	return (arr);
 }
 
-void	fill_arr_lines(char **args, t_data *datas)
+void	fill_arr_lines(char **args, t_data *datas, t_parse *p)
 {
-	int	i;
-	int	start;
-	int	line;
+	int		i;
+	int		line;
 
 	line = 0;
-	start = 0;
+	p->start = 0;
 	i = -1;
 	while (args[++i])
 	{
-		if ((args[i][0] == '|' || args[i][0] == ';') && i - start > 0)
+		if ((args[i][0] == '|' || args[i][0] == ';') && i - p->start > 0)
 		{
+			p->end = i - 1;
 			datas->args_arr[line] = fill_one_line(args,
-					datas->args_arr[line], start, i - 1);
-			start = i + 1;
+					datas->args_arr[line], p);
+			p->start = i + 1;
 			datas->args_arr[++line] = malloc(sizeof(char **) * 2);
 			datas->args_arr[line][0] = ft_strdup(args[i]);
 			datas->args_arr[line][1] = NULL;
 			line++;
 		}
 	}
+	p->end = i - 1;
 	datas->args_arr[line] = fill_one_line(args, datas->args_arr[line],
-			start, i - 1);
+			p);
 	datas->args_arr[line + 1] = NULL;
 }
 
 void	create_output(char **args, t_data *datas)
 {
-	init_out_arr(args, datas);
-	fill_arr_lines(args, datas);
-}
+	t_parse	p;
 
-	// int	i = -1;
-	// printf("\n\n*** New array ***\n");
-	// while (datas->args_arr[++i])
-	// {
-	// 	printf("\nLine %d\n >> ", i);
-	// 	int j = -1;
-	// 	while (datas->args_arr[i][++j])
-	// 		printf("%s ", datas->args_arr[i][j]);
-	// }
-	// printf("\n");
+	init_out_arr(args, datas);
+	fill_arr_lines(args, datas, &p);
+}
