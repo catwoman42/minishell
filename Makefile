@@ -28,6 +28,7 @@ SRCS_FILES = 	main.c						\
 				parsing_str_utils.c			\
 				parsing_join_quotes.c		\
 				parsing_splits.c			\
+				utils_is_char.c				\
 				redirect.c					\
 				get_next_line.c				\
 				parsing_output.c
