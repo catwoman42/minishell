@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   exit.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 18:22:31 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/13 18:23:30 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	exit_minishell(t_data *datas)
@@ -10,7 +22,7 @@ void	exit_minishell(t_data *datas)
 	exit(0);
 }
 
-void handlerctrlc(int num)
+void	handlerctrlc(int num)
 {
 	(void)num;
 	write(1, "\n", 1);

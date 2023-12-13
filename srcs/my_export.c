@@ -1,9 +1,21 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_export.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 19:09:57 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/13 19:11:39 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 int	name_is_valid(char **args)
 {
-	const char *equal;
-	int	name_len;
+	const char	*equal;
+	int		name_len;
 
 	equal = ft_strchr(args[1], '=');
 	name_len = equal - args[1];
@@ -19,13 +31,13 @@ int	name_is_valid(char **args)
 		return (1);
 }
 
-void my_export(char **args, t_data *datas)
+void	my_export(char **args, t_data *datas)
 {
-	int	name_len;
+	const char	*equal;
+	char		*var_name;
+	char		**temp_env;
+	int		name_len;
 	int		line;
-	const char *equal;
-	char	*var_name;
-	char 	**temp_env;
 
 	equal = ft_strchr(args[1], '=');
 	name_len = equal - args[1];

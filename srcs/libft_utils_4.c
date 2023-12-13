@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft_utils_4.c                                    :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 18:27:31 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/13 18:28:26 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
-char *ft_strcpy(char *dest, char *src)
+char	*ft_strcpy(char *dest, char *src)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (src[i] != '\0')
@@ -52,7 +64,7 @@ size_t	ft_strlcpy(char *dst, const char *src, size_t size)
 char	*ft_strldup(const char *s, size_t len)
 {
 	char	*str;
-	size_t		i;
+	size_t	i;
 
 	i = 0;
 	if (ft_strlen(s) < len)

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   builtin_launcher.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 17:57:05 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/13 17:57:56 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 // Recherche dans les fonctions implémentées
@@ -19,7 +31,7 @@ int	look_for_builtin(char **args, t_data *datas)
 	if (ft_strcmp(args[0], "echo") == 0)
 		builtin_echo(args);
 	else if (ft_strcmp(args[0], "cd") == 0)
-	 	builtin_cd(args, datas);
+		builtin_cd(args, datas);
 	else if (ft_strcmp(args[0], "pwd") == 0)
 		builtin_pwd();
 	else if (ft_strcmp(args[0], "exit") == 0)
