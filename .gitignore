@@ -1,5 +1,6 @@
 objs
 minishell
+*.swp
 
 # Prerequisites
 *.d
