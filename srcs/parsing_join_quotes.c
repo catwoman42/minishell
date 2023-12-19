@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_join_quotes.c                              :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 19:10:00 by fatoudiallo       #+#    #+#             */
+/*   Updated: 2023/12/13 19:10:01 by fatoudiallo      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*merge_args(char **args, int start, int end, char *tmp)

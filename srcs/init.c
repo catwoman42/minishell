@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:25:17 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/13 18:25:23 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:45:55 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,16 +16,14 @@ void	make_prompt(t_data *datas)
 {
 	char	*str;
 	char	*str2;
-	char	buf[1024];
 	int		i;
 
 	if (datas->prompt)
 		free(datas->prompt);
-	getcwd(buf, 1024);
-	i = ft_strlen(buf);
-	while (buf[i] != '/')
+	i = ft_strlen(datas->pwd);
+	while (datas->pwd[i] != '/')
 		i--;
-	str = ft_strjoin(RED"Minishell:"YELLOW, buf + i);
+	str = ft_strjoin(RED"Minishell:"YELLOW, datas->pwd + i);
 	str2 = ft_strjoin(str, RED"$ "NC);
 	free(str);
 	datas->prompt = str2;
@@ -33,6 +31,8 @@ void	make_prompt(t_data *datas)
 
 void	init_vars(char **env, t_data *datas)
 {
+	char	cwd[1024];
+
 	datas->err = 0;
 	datas->exit = 0;
 	datas->cmd_ret = 0;
@@ -45,5 +45,8 @@ void	init_vars(char **env, t_data *datas)
 	datas->saved_fd_in = dup(STDIN_FILENO);
 	datas->saved_fd_out = dup(STDOUT_FILENO);
 	datas->here_doc_exists = 0;
+	datas->file_redir_in = 0;
+	datas->file_redir_out = 0;
+	datas->pwd = getcwd(0, 0);
 	make_prompt(datas);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:29:38 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/13 18:43:14 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/19 14:35:50 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,33 +61,40 @@ int	check_redir(char **cmd_line, t_data *datas)
 	return (0);
 }
 
-int	cmd_launcher(t_data *datas)
+void	reset_redirs(t_data *datas)
 {
-	int	i;
-	int		err;
+	if (datas->file_redir_out)
+		dup2(datas->saved_fd_out, STDOUT_FILENO); // restore stdout
+	// if (datas->file_redir_in)
+	// 	dup2(datas->saved_fd_in, STDIN_FILENO); // restore stdin
+	if (datas->here_doc_exists == 1)
+		unlink("temp_file.txt");
+	datas->here_doc_exists = 0;
+	datas->file_redir_out = 0;
+	datas->file_redir_in = 0;
+}
 
-	i = -1;
+int	cmd_launcher(t_data *datas, int i, int err, int haspipe)
+{
 	while (datas->args_arr[++i])
 	{
-		if (datas->args_arr[i][0][0] != '|')
+		haspipe = 0;
+		if (datas->args_arr[i + 1])
 		{
-			printf("\n>>> Command output:\n");
-			err = check_redir(datas->args_arr[i], datas);
-			if (err == 1)
-				return (1);
-			err = look_for_builtin(datas->args_arr[i], datas);	// builtins
-			if (err != 0)
-				err = my_execve(datas->args_arr[i], datas);		// system program
-			if (err)
-				printf("%s: command not found\n", datas->args_arr[i][0]);
-			dup2(datas->saved_fd_out, STDOUT_FILENO);
-			dup2(datas->saved_fd_in, STDIN_FILENO);
-			if (datas->here_doc_exists == 1)
-				unlink("temp_file.txt");
-			datas->here_doc_exists = 0;
+			if (datas->args_arr[i + 1][0][0] == '|')
+				haspipe = 1;
 		}
-			// if (is_redirect(datas->args_arr[i][0][0]) == 0)
-		// 	redirection(datas->args_arr[i][0][0], );
+		err = check_redir(datas->args_arr[i], datas);
+		if (err == 1)
+			return (1);
+		err = look_for_builtin(datas->args_arr[i], datas, haspipe);	// builtins
+		if (err != 0)
+			err = my_execve(datas->args_arr[i], datas, haspipe);		// system program
+		if (err)
+			printf("%s: command not found\n", datas->args_arr[i][0]);
+		reset_redirs(datas);
+		if (haspipe)
+			i++;
 	}
 	return (err);
 }
@@ -103,7 +110,6 @@ void	main_command_loop(t_data *datas)
 {
 	int	err;
 
-	(void)err;
 	while (!datas->exit)
 	{
 		err = 0;
@@ -111,18 +117,20 @@ void	main_command_loop(t_data *datas)
 		datas->cmd_line = readline(datas->prompt);	// lecture ligne de commande
 		if (datas->cmd_line == NULL)				// gestion CTRL D > STOP LOOP
 			break ;
-		if (datas->cmd_line[0])						// si la ligne n'est pas vide
+		if (datas->cmd_line[0] && !is_only_spaces(datas->cmd_line))						// si la ligne n'est pas vide
 		{
 			add_history(datas->cmd_line);			// ajoute la ligne a l'historique
 			err = parse(datas->cmd_line, datas);	// parsing (err si les quotes ne ferment pas)
 			if (!err)
 			{
-				prt_args(datas);
-				err = cmd_launcher(datas);			// lance les commandes
+				//prt_args(datas);
+				err = cmd_launcher(datas, -1, 0, 0);			// lance les commandes
 				clear_data_args_arr(datas);			// free ***data.args_arr
 			}
 		}
 		free(datas->cmd_line);
+		dup2(datas->saved_fd_in, STDIN_FILENO);
+		dup2(datas->saved_fd_out, STDOUT_FILENO);
 	}
 }
 

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_env_vars.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 19:09:42 by fatoudiallo       #+#    #+#             */
+/*   Updated: 2023/12/13 19:09:45 by fatoudiallo      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	*replace_var_in_str(char *str, int pos, char *name, char *val)

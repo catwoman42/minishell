@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   parsing_arrays_utils.c                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/13 19:09:27 by fatoudiallo       #+#    #+#             */
+/*   Updated: 2023/12/13 19:09:30 by fatoudiallo      ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 char	**add_str_arr_pos(char **arr, int pos, char *str)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirect.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 19:13:31 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/13 19:32:32 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/19 12:27:35 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	here_doc(char *delimiters, t_data *datas)
 	{
 		if (ft_strncmp(line, delimiters, ft_strlen(line) - 1) == 0)
 		{
-			printf("end\n");
+			// printf("end\n");
 			free(line);
 			break ;
 		}
@@ -44,6 +44,7 @@ int	redirection_double(char *type_red, char *file_name, t_data *datas)
 	{
 		file_descriptor = open(file_name, O_CREAT | O_WRONLY | O_APPEND, 0600);
 		dup2(file_descriptor, STDOUT_FILENO);
+		datas->file_redir_out = 1;
 		close(file_descriptor);
 	}
 	else if (ft_strcmp(type_red, "<<") == 0)
@@ -63,6 +64,7 @@ int	redirection(char *type_red, char *file_name, t_data *datas)
 		if (file_descriptor == -1)
 			return (1);
 		dup2(file_descriptor, STDOUT_FILENO);
+		datas->file_redir_out = 1;
 		close(file_descriptor);
 	}
 	else if (ft_strcmp(type_red, "<") == 0)
@@ -73,6 +75,7 @@ int	redirection(char *type_red, char *file_name, t_data *datas)
 		if (file_descriptor == -1)
 			return (1);
 		dup2(file_descriptor, STDIN_FILENO);
+		datas->file_redir_in = 1;
 		close(file_descriptor);
 	}
 	else

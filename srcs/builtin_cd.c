@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_cd.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:53:23 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/13 17:55:34 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:57:01 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,5 +34,10 @@ void	builtin_cd(char **args, t_data *datas)
 		datas->exit_status = 1;
 	}
 	else
+	{
+		free(datas->pwd);
+		datas->pwd = getcwd(0, 0);
+		// make_prompt(datas);
 		datas->exit_status = 0;
+	}
 }

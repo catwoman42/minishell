@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:22:31 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/13 18:23:30 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/19 13:45:06 by fatoudiallo      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,9 @@ void	exit_minishell(t_data *datas)
 	if (datas->prompt)
 		free(datas->prompt);
 	free_2d_char(datas->copy_env);
+	close(datas->saved_fd_in);
+	close(datas->saved_fd_out);
+	free(datas->pwd);
 	exit(0);
 }
 

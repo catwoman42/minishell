@@ -42,7 +42,10 @@ typedef struct s_data
 	char	*type_redir;
 	int		saved_fd_in;
 	int		saved_fd_out;
+	int		file_redir_in;
+	int		file_redir_out;
 	int		here_doc_exists;
+	char	*pwd;
 }				t_data;
 
 typedef struct	s_parse
@@ -57,7 +60,7 @@ typedef struct	s_parse
 int redirection(char *type_red, char *file_name, t_data *datas);
 
 // my_execve.c
-int		my_execve(char **args, t_data *datas);
+int	my_execve(char **args, t_data *datas, int haspipe);
 
 // my_export
 void 	my_export(char **args, t_data *datas);
@@ -71,13 +74,13 @@ void	init_vars(char **env, t_data *datas);
 void	make_prompt(t_data *datas);
 
 //builtin_launcher.c
-int		look_for_builtin(char **args, t_data *datas);
+int	look_for_builtin(char **args, t_data *datas, int haspipe);
 // builtin_echo.c
 void	builtin_echo(char **args);
 // builtin_cd.c
 void	builtin_cd(char **args, t_data *datas);
 // builtin_pwd.c
-int		builtin_pwd(void);
+int	builtin_pwd(t_data *datas);
 
 // env_utils.c
 char 	*get_env_var(char *var_name, char **env);
