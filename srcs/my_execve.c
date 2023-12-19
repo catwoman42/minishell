@@ -6,38 +6,11 @@
 /*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:44:08 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 13:30:04 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/19 18:38:57 by fatdiall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/minishell.h"
-
-char	*search_path(char **args, t_data *datas)
-{
-	char	*path;
-	char	**paths_in_array;
-	char	*path_found;
-	int		i;
-
-	i = 0;
-	path = get_env_var("PATH", datas->copy_env);
-	if (!path)
-		return (NULL);
-	paths_in_array = ft_split(path, ':');
-	while (paths_in_array[i])
-	{
-		path_found = ft_strjoin_with_slash(paths_in_array[i], args[0]);
-		if (access(path_found, F_OK) == 0)
-		{
-			free_2d_char(paths_in_array);
-			return (path_found);
-		}
-		free(path_found);
-		i++;
-	}
-	free_2d_char(paths_in_array);
-	return (NULL);
-}
 
 void	do_redir_parent(int fd[2], int haspipe)
 {
@@ -76,7 +49,7 @@ int	launch_execve(t_data *datas, char **args, char *prog_path, int haspipe)
 	if (pid == 0)
 	{
 		do_redir_child(fd, haspipe, datas->file_redir_out);
-		execve(prog_path, args, NULL);
+		execve(prog_path, args, datas->copy_env);
 		exit_minishell(datas);
 	}
 	do_redir_parent(fd, haspipe);
@@ -86,7 +59,7 @@ int	launch_execve(t_data *datas, char **args, char *prog_path, int haspipe)
 	return (0);
 }
 
-void get_return_status(t_data *datas)
+void	get_return_status(t_data *datas)
 {
 	if (WIFEXITED(datas->cmd_ret))
 		datas->exit_status = WEXITSTATUS(datas->cmd_ret);

@@ -6,7 +6,7 @@
 /*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 19:13:31 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 12:27:35 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/19 20:45:49 by fatdiall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ void	here_doc(char *delimiters, t_data *datas)
 	{
 		if (ft_strncmp(line, delimiters, ft_strlen(line) - 1) == 0)
 		{
-			// printf("end\n");
 			free(line);
 			break ;
 		}
@@ -33,7 +32,7 @@ void	here_doc(char *delimiters, t_data *datas)
 		line = get_next_line(STDIN_FILENO);
 	}
 	close(fd_temp);
-	redirection("<", "temp_file.txt", datas);
+	redirection("<", "temp_file.txt", datas, 0);
 }
 
 int	redirection_double(char *type_red, char *file_name, t_data *datas)
@@ -52,31 +51,29 @@ int	redirection_double(char *type_red, char *file_name, t_data *datas)
 	return (0);
 }
 
-int	redirection(char *type_red, char *file_name, t_data *datas)
+int	redirection(char *type_red, char *file_name, t_data *datas, int fd)
 {
-	int	file_descriptor;
-
 	if (ft_strcmp(type_red, ">") == 0)
 	{
-		file_descriptor = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0600);
-		if (file_descriptor == -1)
+		fd = open(file_name, O_CREAT | O_TRUNC | O_WRONLY, 0600);
+		if (fd == -1)
 			printf("error creating file");
-		if (file_descriptor == -1)
+		if (fd == -1)
 			return (1);
-		dup2(file_descriptor, STDOUT_FILENO);
+		dup2(fd, STDOUT_FILENO);
 		datas->file_redir_out = 1;
-		close(file_descriptor);
+		close(fd);
 	}
 	else if (ft_strcmp(type_red, "<") == 0)
 	{
-		file_descriptor = open(file_name, O_RDONLY, 0600);
-		if (file_descriptor == -1)
+		fd = open(file_name, O_RDONLY, 0600);
+		if (fd == -1)
 			printf("error opening file");
-		if (file_descriptor == -1)
+		if (fd == -1)
 			return (1);
-		dup2(file_descriptor, STDIN_FILENO);
+		dup2(fd, STDIN_FILENO);
 		datas->file_redir_in = 1;
-		close(file_descriptor);
+		close(fd);
 	}
 	else
 		redirection_double(type_red, file_name, datas);

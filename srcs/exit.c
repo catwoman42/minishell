@@ -6,7 +6,7 @@
 /*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:22:31 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 13:45:06 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/19 18:15:47 by fatdiall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 void	exit_minishell(t_data *datas)
 {
 	printf("\nExit\n");
-	// FREE ALL MALLOCS
 	if (datas->prompt)
 		free(datas->prompt);
 	free_2d_char(datas->copy_env);
@@ -36,7 +35,8 @@ void	handlerctrlc(int num)
 
 // Role des fonctions readlines.
 // rl_on_new_line(); curseur sur une nouvelle ligne
-// rl_replace_line("", 0); a partir de l'emplacement 0 = debut ligne, remplace la ligne par un ""
+// rl_replace_line("", 0); a partir de 
+// l'emplacement 0 = debut ligne, remplace la ligne par un ""
 // rl_redisplay();re affiche l'input apres modifs
 
 // function clears the current input line

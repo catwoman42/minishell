@@ -1,12 +1,24 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   my_unset.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/19 18:06:30 by fatdiall          #+#    #+#             */
+/*   Updated: 2023/12/19 18:12:51 by fatdiall         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../includes/minishell.h"
 
 void	my_unset(char **args, t_data *datas)
 {
-	int		line;
-	int		name_len;
-	char	*var_name;
-	const char *equal;
-	char **temp_env;
+	char		*var_name;
+	char		**temp_env;
+	const char	*equal;
+	int			line;
+	int			name_len;
 
 	name_len = 0;
 	equal = ft_strchr(args[1], '=');

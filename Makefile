@@ -31,6 +31,7 @@ SRCS_FILES = 	main.c						\
 				utils_is_char.c				\
 				redirect.c					\
 				get_next_line.c				\
+				main_tools.c				\
 				parsing_output.c
 
 

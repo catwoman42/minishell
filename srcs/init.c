@@ -6,7 +6,7 @@
 /*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:25:17 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 13:45:55 by fatoudiallo      ###   ########.fr       */
+/*   Updated: 2023/12/19 17:34:27 by fatdiall         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ void	make_prompt(t_data *datas)
 
 void	init_vars(char **env, t_data *datas)
 {
-	char	cwd[1024];
-
 	datas->err = 0;
 	datas->exit = 0;
 	datas->cmd_ret = 0;
