@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_tools.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 19:45:49 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 20:45:20 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:53:12 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	prt_args(t_data *datas)
 
 int	redir_sign(char **cmd_line, int i)
 {
-	i = 0;
 	if (ft_strcmp(cmd_line[i], "<") == 0
 		|| ft_strcmp(cmd_line[i], ">>") == 0
 		|| ft_strcmp(cmd_line[i], ">") == 0
