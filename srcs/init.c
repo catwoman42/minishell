@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:25:17 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 17:34:27 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/20 13:52:14 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,24 @@ void	make_prompt(t_data *datas)
 	datas->prompt = str2;
 }
 
+void	init_env_var(t_data *datas)
+{
+	char	*str;
+	char	*str2;
+	int		shlvl;
+
+	str = get_env_var("SHLVL", datas->copy_env);
+	if (str)
+	{
+		shlvl = ft_atoi(str) + 1;
+		str2 = ft_itoa(shlvl);
+		str = ft_strjoin("SHLVL=", str2);
+		free(str2);
+		export_helper(datas, str);
+		free(str);
+	}
+}
+
 void	init_vars(char **env, t_data *datas)
 {
 	datas->err = 0;
@@ -46,5 +64,6 @@ void	init_vars(char **env, t_data *datas)
 	datas->file_redir_in = 0;
 	datas->file_redir_out = 0;
 	datas->pwd = getcwd(0, 0);
+	init_env_var(datas);
 	make_prompt(datas);
 }

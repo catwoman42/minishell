@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 19:20:11 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 12:10:34 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/20 13:57:31 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ int			my_execve(char **args, t_data *datas, int haspipe);
 
 // my_export
 void		my_export(char **args, t_data *datas);
-int			name_is_valid(char **args);
+int			name_is_valid(char **args, int i);
+void		export_helper(t_data *datas, char *str);
 
 // my_unset
 void		my_unset(char **args, t_data *datas);
@@ -127,6 +128,7 @@ char		*ft_strldup(const char *s, size_t len);
 
 // libft_utils_5.c
 char		*ft_itoa(int n);
+int			ft_atoi(const char *str);
 
 // free_utils.c
 void		free_2d_char(char **arr);
