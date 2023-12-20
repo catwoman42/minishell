@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:57:05 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 12:20:45 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/20 14:46:30 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,17 @@
 
 // Recherche dans les fonctions implémentées
 
-void	prt_env(char **args)
+void	prt_env(char **args, int declarex)
 {
 	int	i;
 
 	i = 0;
 	while (args[i])
 	{
-		printf("%s\n", args[i]);
+		if (declarex)
+			printf("declare -x %s\n", args[i]);
+		else
+			printf("%s\n", args[i]);
 		i++;
 	}
 }
@@ -61,7 +64,7 @@ int	look_for_builtin(char **args, t_data *datas, int haspipe)
 	else if (ft_strcmp(args[0], "exit") == 0)
 		exit_minishell(datas);
 	else if (ft_strcmp(args[0], "env") == 0)
-		prt_env(datas->copy_env);
+		prt_env(datas->copy_env, 0);
 	else if (ft_strcmp(args[0], "export") == 0)
 		my_export(args, datas);
 	else if (ft_strcmp(args[0], "unset") == 0)

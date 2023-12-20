@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 19:20:11 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 13:57:31 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/20 14:45:06 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ void		init_vars(char **env, t_data *datas);
 void		make_prompt(t_data *datas);
 
 //builtin_launcher.c
+void		prt_env(char **args, int declarex);
 int			look_for_builtin(char **args, t_data *datas, int haspipe);
 char		*search_path(char **args, t_data *datas);
 // builtin_echo.c

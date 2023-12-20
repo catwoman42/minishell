@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 19:09:57 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 14:15:52 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/20 14:46:01 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,10 @@ void	my_export(char **args, t_data *datas)
 	int			i;
 
 	i = 1;
+	if (!args[1])
+	{
+		prt_env(datas->copy_env, 1);
+	}
 	while (args[i])
 	{
 		if (ft_strchr(args[i], '=') != NULL)
