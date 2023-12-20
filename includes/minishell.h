@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatdiall <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/19 19:20:11 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 20:36:47 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/20 12:10:34 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,8 @@ typedef struct s_parse
 int			redirection(char *type_red, char *file_name, t_data *datas, int fd);
 
 // my_execve.c
+void		do_redir_parent(int fd[2], int haspipe);
+void		do_redir_child(int fd[2], int haspipe, int file_redir);
 int			my_execve(char **args, t_data *datas, int haspipe);
 
 // my_export

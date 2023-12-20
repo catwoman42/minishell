@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtin_launcher.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 17:57:05 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 18:04:27 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/20 12:20:45 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,25 +26,38 @@ void	prt_env(char **args)
 	}
 }
 
+int builtin_with_pipe(char **args, t_data *datas, int haspipe)
+{
+	pid_t	pid;
+	int		fd[2];
+
+	if (haspipe)
+		pipe(fd);
+	pid = fork();
+	if (pid == 0)
+	{
+		do_redir_child(fd, haspipe, datas->file_redir_out);
+		if (ft_strcmp(args[0], "echo") == 0)
+			builtin_echo(args);
+		else if (ft_strcmp(args[0], "pwd") == 0)
+			builtin_pwd(datas);
+		exit_minishell(datas);
+	}
+	do_redir_parent(fd, haspipe);
+	signal(SIGINT, SIG_IGN);
+	waitpid(pid, 0, 0);
+	signal(SIGINT, handlerctrlc);
+	datas->exit_status = 0;
+	return (0);
+}
+
 int	look_for_builtin(char **args, t_data *datas, int haspipe)
 {
-	if (ft_strcmp(args[0], "echo") == 0)
-	{
-		if (haspipe)
-		{
-			int	fd[2];
-			pipe(fd);
-			dup2(fd[0], STDIN_FILENO);
-			dup2(fd[1], STDOUT_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-		}
-		builtin_echo(args);
-	}
+	if (ft_strcmp(args[0], "echo") == 0 ||
+		ft_strcmp(args[0], "pwd") == 0)
+		builtin_with_pipe(args, datas, haspipe);
 	else if (ft_strcmp(args[0], "cd") == 0)
 		builtin_cd(args, datas);
-	else if (ft_strcmp(args[0], "pwd") == 0)
-		builtin_pwd(datas);
 	else if (ft_strcmp(args[0], "exit") == 0)
 		exit_minishell(datas);
 	else if (ft_strcmp(args[0], "env") == 0)
