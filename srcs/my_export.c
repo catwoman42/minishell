@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 19:09:57 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 14:02:50 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/20 14:15:52 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,10 @@ int	name_is_valid(char **args, int i)
 	int			name_len;
 
 	equal = ft_strchr(args[i], '=');
-	name_len = equal - args[i];
+	if (equal != NULL)
+		name_len = equal - args[i];
+	else
+		name_len = ft_strlen(args[i]);
 	if (name_len < 1)
 		return (1);
 	if ((args[i][0] >= 'a' && args[i][0] <= 'z')
@@ -67,7 +70,8 @@ void	my_export(char **args, t_data *datas)
 	i = 1;
 	while (args[i])
 	{
-		sub_export(args, datas, i, 0);
+		if (ft_strchr(args[i], '=') != NULL)
+			sub_export(args, datas, i, 0);
 		++i;
 	}
 }
