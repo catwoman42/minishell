@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:25:17 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 13:52:14 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/20 14:30:38 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,18 @@ void	init_env_var(t_data *datas)
 
 	str = get_env_var("SHLVL", datas->copy_env);
 	if (str)
-	{
 		shlvl = ft_atoi(str) + 1;
-		str2 = ft_itoa(shlvl);
-		str = ft_strjoin("SHLVL=", str2);
-		free(str2);
+	else
+		shlvl = 1;
+	str2 = ft_itoa(shlvl);
+	str = ft_strjoin("SHLVL=", str2);
+	free(str2);
+	export_helper(datas, str);
+	free(str);
+	str = get_env_var("PWD", datas->copy_env);
+	if (!str)
+	{
+		str = ft_strjoin("PWD=", datas->pwd);
 		export_helper(datas, str);
 		free(str);
 	}

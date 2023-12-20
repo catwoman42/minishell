@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fatoudiallo <fatoudiallo@student.42.fr>    +#+  +:+       +#+        */
+/*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:29:38 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/19 20:01:47 by fatdiall         ###   ########.fr       */
+/*   Updated: 2023/12/20 14:27:28 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,13 +36,6 @@ int	cmd_launcher(t_data *datas, int i, int err, int haspipe)
 	}
 	return (err);
 }
-
-//char ***args_arr[0] = {"echo", "La maison", NULL};
-//char ***args_arr[1] = {"|", NULL};
-//char ***args_arr[2] = {"echo", "Coucou", NULL};
-//char ***args_arr[3] = {"|", NULL};
-//char ***args_arr[4] = {"echo", "hello", ">", "file", <, file2, NULL};
-//char ***args_arr[4] = NULL
 
 void	main_command_loop(t_data *datas)
 {
