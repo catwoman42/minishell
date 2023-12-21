@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 19:09:57 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 14:46:01 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/21 13:48:06 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	name_is_valid(char **args, int i)
 		return (1);
 }
 
-void sub_export(char **args, t_data *datas, int i, int line)
+void	sub_export(char **args, t_data *datas, int i, int line)
 {
 	char		*var_name;
 	char		**temp_env;

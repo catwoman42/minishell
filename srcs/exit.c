@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:22:31 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 12:20:06 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/21 13:47:44 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	exit_minishell(t_data *datas)
 {
-	//printf("\nExit\n");
 	if (datas->prompt)
 		free(datas->prompt);
 	free_2d_char(datas->copy_env);

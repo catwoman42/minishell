@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:29:38 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 14:48:51 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/21 13:47:12 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ void	main_command_loop(t_data *datas)
 			err = parse(datas->cmd_line, datas);
 			if (!err)
 			{
-				prt_args(datas);
 				err = cmd_launcher(datas, -1, 0, 0);
 				clear_data_args_arr(datas);
 			}

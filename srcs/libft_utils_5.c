@@ -6,7 +6,7 @@
 /*   By: raphaelloussignian <raphaelloussignian@    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/13 18:28:43 by fatdiall          #+#    #+#             */
-/*   Updated: 2023/12/20 13:49:46 by raphaellous      ###   ########.fr       */
+/*   Updated: 2023/12/21 13:47:53 by raphaellous      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,3 @@ int	ft_atoi(const char *str)
 	}
 	return (minus * res);
 }
-
